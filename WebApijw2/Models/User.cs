@@ -33,11 +33,16 @@ namespace WebApijw2.Models
         [Required]
         public int CongregationId { get; set; }
 
+        [Required]
+        public int StateId { get; set; }
+
         public virtual Congregation Congregation { get; set; }
 
         public virtual Circuit Circuit { get; set; }
 
         public virtual City City { get; set; }
+
+        public virtual State State { get; set; }
 
         public virtual Country Country { get; set; }
 

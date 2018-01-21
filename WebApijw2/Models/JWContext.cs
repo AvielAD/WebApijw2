@@ -11,7 +11,7 @@ namespace WebApijw2.Models
     {
         public JWContext():base("DefaultConnection")
         {
-
+            this.Configuration.LazyLoadingEnabled = false;
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -26,11 +26,13 @@ namespace WebApijw2.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<State> States { get; set; }
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Circuit> Circuits { get; set; }
         public DbSet<UserVisited> UserVisited { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Congregation> Congregations { get; set; }
+        public DbSet<Report> Reports { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
     }
 }

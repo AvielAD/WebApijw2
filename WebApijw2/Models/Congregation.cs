@@ -16,7 +16,7 @@ namespace WebApijw2.Models
         public string Decription { get; set; }
 
         [Required]
-        public int CirtuitId { get; set; }
+        public int CircuitId { get; set; }
 
         [Required]
         public int CityId { get; set; }
@@ -24,6 +24,10 @@ namespace WebApijw2.Models
         [Required]
         public int CountryId { get; set; }
 
+        [Required]
+        public int StateId { get; set; }
+
+        public virtual State State { get; set; }
         public virtual Circuit Circuit { get; set; }
         public virtual City City { get; set; }
         public virtual Country Country { get; set; }

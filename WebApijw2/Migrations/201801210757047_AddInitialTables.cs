@@ -21,16 +21,19 @@ namespace WebApijw2.Migrations
                         CountryId = c.Int(nullable: false),
                         CircuitId = c.Int(nullable: false),
                         CongregationId = c.Int(nullable: false),
+                        StateId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.AdministratorId)
                 .ForeignKey("dbo.Circuits", t => t.CircuitId)
                 .ForeignKey("dbo.Cities", t => t.CityId)
                 .ForeignKey("dbo.Congregations", t => t.CongregationId)
                 .ForeignKey("dbo.Countries", t => t.CountryId)
+                .ForeignKey("dbo.States", t => t.StateId)
                 .Index(t => t.CityId)
                 .Index(t => t.CountryId)
                 .Index(t => t.CircuitId)
-                .Index(t => t.CongregationId);
+                .Index(t => t.CongregationId)
+                .Index(t => t.StateId);
             
             CreateTable(
                 "dbo.Circuits",
@@ -50,11 +53,11 @@ namespace WebApijw2.Migrations
                     {
                         CityId = c.Int(nullable: false, identity: true),
                         Description = c.String(nullable: false),
-                        CountryId = c.Int(nullable: false),
+                        StateId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.CityId)
-                .ForeignKey("dbo.Countries", t => t.CountryId)
-                .Index(t => t.CountryId);
+                .ForeignKey("dbo.States", t => t.StateId)
+                .Index(t => t.StateId);
             
             CreateTable(
                 "dbo.Congregations",
@@ -63,18 +66,20 @@ namespace WebApijw2.Migrations
                         CongregationId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         Decription = c.String(),
-                        CirtuitId = c.Int(nullable: false),
+                        CircuitId = c.Int(nullable: false),
                         CityId = c.Int(nullable: false),
                         CountryId = c.Int(nullable: false),
-                        Circuit_CircuitId = c.Int(),
+                        StateId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.CongregationId)
-                .ForeignKey("dbo.Circuits", t => t.Circuit_CircuitId)
+                .ForeignKey("dbo.Circuits", t => t.CircuitId)
                 .ForeignKey("dbo.Cities", t => t.CityId)
                 .ForeignKey("dbo.Countries", t => t.CountryId)
+                .ForeignKey("dbo.States", t => t.StateId)
+                .Index(t => t.CircuitId)
                 .Index(t => t.CityId)
                 .Index(t => t.CountryId)
-                .Index(t => t.Circuit_CircuitId);
+                .Index(t => t.StateId);
             
             CreateTable(
                 "dbo.Countries",
@@ -84,6 +89,18 @@ namespace WebApijw2.Migrations
                         Description = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.CountryId);
+            
+            CreateTable(
+                "dbo.States",
+                c => new
+                    {
+                        StateId = c.Int(nullable: false, identity: true),
+                        Description = c.String(),
+                        CountryId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.StateId)
+                .ForeignKey("dbo.Countries", t => t.CountryId)
+                .Index(t => t.CountryId);
             
             CreateTable(
                 "dbo.Users",
@@ -99,16 +116,19 @@ namespace WebApijw2.Migrations
                         CityId = c.Int(nullable: false),
                         CountryId = c.Int(nullable: false),
                         CongregationId = c.Int(nullable: false),
+                        StateId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.UserId)
                 .ForeignKey("dbo.Circuits", t => t.CircuitId)
                 .ForeignKey("dbo.Cities", t => t.CityId)
                 .ForeignKey("dbo.Congregations", t => t.CongregationId)
                 .ForeignKey("dbo.Countries", t => t.CountryId)
+                .ForeignKey("dbo.States", t => t.StateId)
                 .Index(t => t.CircuitId)
                 .Index(t => t.CityId)
                 .Index(t => t.CountryId)
-                .Index(t => t.CongregationId);
+                .Index(t => t.CongregationId)
+                .Index(t => t.StateId);
             
             CreateTable(
                 "dbo.Reports",
@@ -119,13 +139,13 @@ namespace WebApijw2.Migrations
                         Stop = c.DateTime(nullable: false),
                         Remarks = c.String(),
                         UserId = c.Int(nullable: false),
-                        Congregation_CongregationId = c.Int(),
+                        CongregationId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ReportId)
+                .ForeignKey("dbo.Congregations", t => t.CongregationId)
                 .ForeignKey("dbo.Users", t => t.UserId)
-                .ForeignKey("dbo.Congregations", t => t.Congregation_CongregationId)
                 .Index(t => t.UserId)
-                .Index(t => t.Congregation_CongregationId);
+                .Index(t => t.CongregationId);
             
             CreateTable(
                 "dbo.Visits",
@@ -240,7 +260,7 @@ namespace WebApijw2.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Reports", "Congregation_CongregationId", "dbo.Congregations");
+            DropForeignKey("dbo.Users", "StateId", "dbo.States");
             DropForeignKey("dbo.Videos", "VisitId", "dbo.Visits");
             DropForeignKey("dbo.UserVisiteds", "VisitId", "dbo.Visits");
             DropForeignKey("dbo.UserVisiteds", "CountryId", "dbo.Countries");
@@ -253,15 +273,19 @@ namespace WebApijw2.Migrations
             DropForeignKey("dbo.Brochures", "VisitId", "dbo.Visits");
             DropForeignKey("dbo.Books", "VisitId", "dbo.Visits");
             DropForeignKey("dbo.Reports", "UserId", "dbo.Users");
+            DropForeignKey("dbo.Reports", "CongregationId", "dbo.Congregations");
             DropForeignKey("dbo.Users", "CountryId", "dbo.Countries");
             DropForeignKey("dbo.Users", "CongregationId", "dbo.Congregations");
             DropForeignKey("dbo.Users", "CityId", "dbo.Cities");
             DropForeignKey("dbo.Users", "CircuitId", "dbo.Circuits");
+            DropForeignKey("dbo.States", "CountryId", "dbo.Countries");
+            DropForeignKey("dbo.Congregations", "StateId", "dbo.States");
+            DropForeignKey("dbo.Cities", "StateId", "dbo.States");
+            DropForeignKey("dbo.Administrators", "StateId", "dbo.States");
             DropForeignKey("dbo.Congregations", "CountryId", "dbo.Countries");
-            DropForeignKey("dbo.Cities", "CountryId", "dbo.Countries");
             DropForeignKey("dbo.Administrators", "CountryId", "dbo.Countries");
             DropForeignKey("dbo.Congregations", "CityId", "dbo.Cities");
-            DropForeignKey("dbo.Congregations", "Circuit_CircuitId", "dbo.Circuits");
+            DropForeignKey("dbo.Congregations", "CircuitId", "dbo.Circuits");
             DropForeignKey("dbo.Administrators", "CongregationId", "dbo.Congregations");
             DropForeignKey("dbo.Circuits", "CityId", "dbo.Cities");
             DropForeignKey("dbo.Administrators", "CityId", "dbo.Cities");
@@ -277,17 +301,21 @@ namespace WebApijw2.Migrations
             DropIndex("dbo.Books", new[] { "VisitId" });
             DropIndex("dbo.Visits", new[] { "ReportId" });
             DropIndex("dbo.Visits", new[] { "CategoryId" });
-            DropIndex("dbo.Reports", new[] { "Congregation_CongregationId" });
+            DropIndex("dbo.Reports", new[] { "CongregationId" });
             DropIndex("dbo.Reports", new[] { "UserId" });
+            DropIndex("dbo.Users", new[] { "StateId" });
             DropIndex("dbo.Users", new[] { "CongregationId" });
             DropIndex("dbo.Users", new[] { "CountryId" });
             DropIndex("dbo.Users", new[] { "CityId" });
             DropIndex("dbo.Users", new[] { "CircuitId" });
-            DropIndex("dbo.Congregations", new[] { "Circuit_CircuitId" });
+            DropIndex("dbo.States", new[] { "CountryId" });
+            DropIndex("dbo.Congregations", new[] { "StateId" });
             DropIndex("dbo.Congregations", new[] { "CountryId" });
             DropIndex("dbo.Congregations", new[] { "CityId" });
-            DropIndex("dbo.Cities", new[] { "CountryId" });
+            DropIndex("dbo.Congregations", new[] { "CircuitId" });
+            DropIndex("dbo.Cities", new[] { "StateId" });
             DropIndex("dbo.Circuits", new[] { "CityId" });
+            DropIndex("dbo.Administrators", new[] { "StateId" });
             DropIndex("dbo.Administrators", new[] { "CongregationId" });
             DropIndex("dbo.Administrators", new[] { "CircuitId" });
             DropIndex("dbo.Administrators", new[] { "CountryId" });
@@ -302,6 +330,7 @@ namespace WebApijw2.Migrations
             DropTable("dbo.Visits");
             DropTable("dbo.Reports");
             DropTable("dbo.Users");
+            DropTable("dbo.States");
             DropTable("dbo.Countries");
             DropTable("dbo.Congregations");
             DropTable("dbo.Cities");

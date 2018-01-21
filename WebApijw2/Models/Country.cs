@@ -15,7 +15,7 @@ namespace WebApijw2.Models
         [Required]
         public string Description { get; set; }
 
-        public virtual ICollection<City> Cities { get; set; }
+        public virtual ICollection<State> States { get; set; }
         public virtual ICollection<UserVisited> UserVisiteds { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Congregation> Congregations { get; set; }

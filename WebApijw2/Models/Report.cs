@@ -20,7 +20,12 @@ namespace WebApijw2.Models
         [Required]
         public int UserId { get; set; }
 
+        [Required]
+        public int CongregationId { get; set; }
+
         public virtual User User { get; set; }
+
+        public virtual Congregation Congregation { get; set; }
 
         public virtual ICollection<Visit> Visits { get; set; }
 

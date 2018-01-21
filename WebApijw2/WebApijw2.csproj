@@ -200,16 +200,31 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\AdministratorsController.cs" />
+    <Compile Include="Controllers\API\BooksController.cs" />
+    <Compile Include="Controllers\API\BrochuresController.cs" />
+    <Compile Include="Controllers\API\CategoriesController.cs" />
+    <Compile Include="Controllers\API\CircuitsController.cs" />
+    <Compile Include="Controllers\API\CitiesController.cs" />
+    <Compile Include="Controllers\API\CongregationsController.cs" />
+    <Compile Include="Controllers\API\CountriesController.cs" />
+    <Compile Include="Controllers\API\MagazinesController.cs" />
+    <Compile Include="Controllers\API\ReportsController.cs" />
+    <Compile Include="Controllers\API\StatesController.cs" />
+    <Compile Include="Controllers\API\TeatriesController.cs" />
+    <Compile Include="Controllers\API\UsersController.cs" />
+    <Compile Include="Controllers\API\UserVisitedsController.cs" />
+    <Compile Include="Controllers\API\VideosController.cs" />
+    <Compile Include="Controllers\API\VisitsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\VisitsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801200620433_AddInitialTables.cs" />
-    <Compile Include="Migrations\201801200620433_AddInitialTables.Designer.cs">
-      <DependentUpon>201801200620433_AddInitialTables.cs</DependentUpon>
+    <Compile Include="Migrations\201801210757047_AddInitialTables.cs" />
+    <Compile Include="Migrations\201801210757047_AddInitialTables.Designer.cs">
+      <DependentUpon>201801210757047_AddInitialTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -226,6 +241,7 @@
     <Compile Include="Models\Magazine.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Models\Teatry.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserVisited.cs" />
@@ -246,6 +262,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\WebApijw220180121112955 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -301,6 +318,11 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Books\Create.cshtml" />
+    <Content Include="Views\Books\Delete.cshtml" />
+    <Content Include="Views\Books\Details.cshtml" />
+    <Content Include="Views\Books\Edit.cshtml" />
+    <Content Include="Views\Books\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -319,8 +341,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801200620433_AddInitialTables.resx">
-      <DependentUpon>201801200620433_AddInitialTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801210757047_AddInitialTables.resx">
+      <DependentUpon>201801210757047_AddInitialTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
