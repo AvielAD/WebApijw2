@@ -18,5 +18,6 @@ namespace WebApijw2.Models
         public virtual ICollection<Visit> Visits { get; set; }
 
 
+
     }
 }

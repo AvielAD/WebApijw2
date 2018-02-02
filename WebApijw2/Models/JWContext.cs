@@ -34,5 +34,9 @@ namespace WebApijw2.Models
         public DbSet<Congregation> Congregations { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<VisitCategory> VisitCategories{ get; set; }
+        public DbSet<Author> Authors{ get; set; }
+        public DbSet<Editorial> Editorials{ get; set; }
+
     }
 }

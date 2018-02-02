@@ -6,23 +6,17 @@ using System.Web;
 
 namespace WebApijw2.Models
 {
-    public class Video
+    public class VisitCategory
     {
         [Key]
-        public int VideoId { get; set; }
+        public int VisitCategoryId { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
         [Required]
         public int VisitId { get; set; }
 
-        [Required]
-        public int EditorialId { get; set; }
-
-        public virtual Editorial Editorial { get; set; }
-
-        public virtual ICollection<Author> Authors { get; set; }
+        public virtual Visit Visit { get; set; }
 
     }
 }

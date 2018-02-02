@@ -16,13 +16,10 @@ namespace WebApijw2.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public int CategoryId { get; set; }
-
-        [Required]
         public int ReportId { get; set; }
 
         public virtual Report Report { get; set; }
-        public virtual Category Category { get; set; }
+        public virtual ICollection<VisitCategory> VisitCategories { get; set; }
         public virtual ICollection<Brochure> Brochures { get; set; }
         public virtual ICollection<Book> Books { get; set; }
         public virtual ICollection<Magazine> Magazines { get; set; }

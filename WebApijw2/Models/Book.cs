@@ -17,5 +17,13 @@ namespace WebApijw2.Models
         [Required]
         public int VisitId { get; set; }
 
+        [Required]
+        public int EditorialId { get; set; }
+
+        public virtual Editorial Editorial { get; set; }
+
+
+        public virtual ICollection<Author> Authors { get; set; }
+
     }
 }

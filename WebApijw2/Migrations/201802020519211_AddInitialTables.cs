@@ -154,14 +154,14 @@ namespace WebApijw2.Migrations
                         VisitId = c.Int(nullable: false, identity: true),
                         Description = c.String(),
                         Date = c.DateTime(nullable: false),
-                        CategoryId = c.Int(nullable: false),
                         ReportId = c.Int(nullable: false),
+                        Category_CategoryId = c.Int(),
                     })
                 .PrimaryKey(t => t.VisitId)
-                .ForeignKey("dbo.Categories", t => t.CategoryId)
                 .ForeignKey("dbo.Reports", t => t.ReportId)
-                .Index(t => t.CategoryId)
-                .Index(t => t.ReportId);
+                .ForeignKey("dbo.Categories", t => t.Category_CategoryId)
+                .Index(t => t.ReportId)
+                .Index(t => t.Category_CategoryId);
             
             CreateTable(
                 "dbo.Books",
@@ -170,10 +170,54 @@ namespace WebApijw2.Migrations
                         BookId = c.Int(nullable: false, identity: true),
                         Description = c.String(nullable: false),
                         VisitId = c.Int(nullable: false),
+                        EditorialId = c.Int(nullable: false),
+                        Editorial_MyProperty = c.Int(),
                     })
                 .PrimaryKey(t => t.BookId)
+                .ForeignKey("dbo.Editorials", t => t.Editorial_MyProperty)
                 .ForeignKey("dbo.Visits", t => t.VisitId)
-                .Index(t => t.VisitId);
+                .Index(t => t.VisitId)
+                .Index(t => t.Editorial_MyProperty);
+            
+            CreateTable(
+                "dbo.Authors",
+                c => new
+                    {
+                        AuthorId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        LastName = c.String(),
+                        BookId = c.Int(nullable: false),
+                        BrochureId = c.Int(nullable: false),
+                        MagazineId = c.Int(nullable: false),
+                        VideoId = c.Int(nullable: false),
+                        TeatryId = c.Int(nullable: false),
+                        EditorialId = c.Int(nullable: false),
+                        Editorial_MyProperty = c.Int(),
+                    })
+                .PrimaryKey(t => t.AuthorId)
+                .ForeignKey("dbo.Books", t => t.BookId)
+                .ForeignKey("dbo.Editorials", t => t.Editorial_MyProperty)
+                .ForeignKey("dbo.Brochures", t => t.BrochureId)
+                .ForeignKey("dbo.Magazines", t => t.MagazineId)
+                .ForeignKey("dbo.Teatries", t => t.TeatryId)
+                .ForeignKey("dbo.Videos", t => t.VideoId)
+                .Index(t => t.BookId)
+                .Index(t => t.BrochureId)
+                .Index(t => t.MagazineId)
+                .Index(t => t.VideoId)
+                .Index(t => t.TeatryId)
+                .Index(t => t.Editorial_MyProperty);
+            
+            CreateTable(
+                "dbo.Editorials",
+                c => new
+                    {
+                        MyProperty = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Address = c.String(),
+                        Phone = c.String(),
+                    })
+                .PrimaryKey(t => t.MyProperty);
             
             CreateTable(
                 "dbo.Brochures",
@@ -182,19 +226,14 @@ namespace WebApijw2.Migrations
                         BrochureId = c.Int(nullable: false, identity: true),
                         Description = c.String(nullable: false),
                         VisitId = c.Int(nullable: false),
+                        EditorialId = c.Int(nullable: false),
+                        Editorial_MyProperty = c.Int(),
                     })
                 .PrimaryKey(t => t.BrochureId)
+                .ForeignKey("dbo.Editorials", t => t.Editorial_MyProperty)
                 .ForeignKey("dbo.Visits", t => t.VisitId)
-                .Index(t => t.VisitId);
-            
-            CreateTable(
-                "dbo.Categories",
-                c => new
-                    {
-                        CategoryId = c.Int(nullable: false, identity: true),
-                        Description = c.String(nullable: false),
-                    })
-                .PrimaryKey(t => t.CategoryId);
+                .Index(t => t.VisitId)
+                .Index(t => t.Editorial_MyProperty);
             
             CreateTable(
                 "dbo.Magazines",
@@ -203,10 +242,14 @@ namespace WebApijw2.Migrations
                         MagazineId = c.Int(nullable: false, identity: true),
                         Description = c.String(nullable: false),
                         VisitId = c.Int(nullable: false),
+                        EditorialId = c.Int(nullable: false),
+                        Editorial_MyProperty = c.Int(),
                     })
                 .PrimaryKey(t => t.MagazineId)
+                .ForeignKey("dbo.Editorials", t => t.Editorial_MyProperty)
                 .ForeignKey("dbo.Visits", t => t.VisitId)
-                .Index(t => t.VisitId);
+                .Index(t => t.VisitId)
+                .Index(t => t.Editorial_MyProperty);
             
             CreateTable(
                 "dbo.Teatries",
@@ -215,10 +258,30 @@ namespace WebApijw2.Migrations
                         TeatryId = c.Int(nullable: false, identity: true),
                         Description = c.String(nullable: false),
                         VisitId = c.Int(nullable: false),
+                        EditorialId = c.Int(nullable: false),
+                        Editorial_MyProperty = c.Int(),
                     })
                 .PrimaryKey(t => t.TeatryId)
+                .ForeignKey("dbo.Editorials", t => t.Editorial_MyProperty)
                 .ForeignKey("dbo.Visits", t => t.VisitId)
-                .Index(t => t.VisitId);
+                .Index(t => t.VisitId)
+                .Index(t => t.Editorial_MyProperty);
+            
+            CreateTable(
+                "dbo.Videos",
+                c => new
+                    {
+                        VideoId = c.Int(nullable: false, identity: true),
+                        Description = c.String(nullable: false),
+                        VisitId = c.Int(nullable: false),
+                        EditorialId = c.Int(nullable: false),
+                        Editorial_MyProperty = c.Int(),
+                    })
+                .PrimaryKey(t => t.VideoId)
+                .ForeignKey("dbo.Editorials", t => t.Editorial_MyProperty)
+                .ForeignKey("dbo.Visits", t => t.VisitId)
+                .Index(t => t.VisitId)
+                .Index(t => t.Editorial_MyProperty);
             
             CreateTable(
                 "dbo.UserVisiteds",
@@ -245,22 +308,33 @@ namespace WebApijw2.Migrations
                 .Index(t => t.VisitId);
             
             CreateTable(
-                "dbo.Videos",
+                "dbo.VisitCategories",
                 c => new
                     {
-                        VideoId = c.Int(nullable: false, identity: true),
-                        Description = c.String(nullable: false),
+                        VisitCategoryId = c.Int(nullable: false, identity: true),
+                        Description = c.String(),
                         VisitId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.VideoId)
+                .PrimaryKey(t => t.VisitCategoryId)
                 .ForeignKey("dbo.Visits", t => t.VisitId)
                 .Index(t => t.VisitId);
+            
+            CreateTable(
+                "dbo.Categories",
+                c => new
+                    {
+                        CategoryId = c.Int(nullable: false, identity: true),
+                        Description = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.CategoryId);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Visits", "Category_CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Users", "StateId", "dbo.States");
+            DropForeignKey("dbo.VisitCategories", "VisitId", "dbo.Visits");
             DropForeignKey("dbo.Videos", "VisitId", "dbo.Visits");
             DropForeignKey("dbo.UserVisiteds", "VisitId", "dbo.Visits");
             DropForeignKey("dbo.UserVisiteds", "CountryId", "dbo.Countries");
@@ -269,9 +343,19 @@ namespace WebApijw2.Migrations
             DropForeignKey("dbo.Teatries", "VisitId", "dbo.Visits");
             DropForeignKey("dbo.Visits", "ReportId", "dbo.Reports");
             DropForeignKey("dbo.Magazines", "VisitId", "dbo.Visits");
-            DropForeignKey("dbo.Visits", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Brochures", "VisitId", "dbo.Visits");
             DropForeignKey("dbo.Books", "VisitId", "dbo.Visits");
+            DropForeignKey("dbo.Videos", "Editorial_MyProperty", "dbo.Editorials");
+            DropForeignKey("dbo.Authors", "VideoId", "dbo.Videos");
+            DropForeignKey("dbo.Teatries", "Editorial_MyProperty", "dbo.Editorials");
+            DropForeignKey("dbo.Authors", "TeatryId", "dbo.Teatries");
+            DropForeignKey("dbo.Magazines", "Editorial_MyProperty", "dbo.Editorials");
+            DropForeignKey("dbo.Authors", "MagazineId", "dbo.Magazines");
+            DropForeignKey("dbo.Brochures", "Editorial_MyProperty", "dbo.Editorials");
+            DropForeignKey("dbo.Authors", "BrochureId", "dbo.Brochures");
+            DropForeignKey("dbo.Books", "Editorial_MyProperty", "dbo.Editorials");
+            DropForeignKey("dbo.Authors", "Editorial_MyProperty", "dbo.Editorials");
+            DropForeignKey("dbo.Authors", "BookId", "dbo.Books");
             DropForeignKey("dbo.Reports", "UserId", "dbo.Users");
             DropForeignKey("dbo.Reports", "CongregationId", "dbo.Congregations");
             DropForeignKey("dbo.Users", "CountryId", "dbo.Countries");
@@ -290,17 +374,29 @@ namespace WebApijw2.Migrations
             DropForeignKey("dbo.Circuits", "CityId", "dbo.Cities");
             DropForeignKey("dbo.Administrators", "CityId", "dbo.Cities");
             DropForeignKey("dbo.Administrators", "CircuitId", "dbo.Circuits");
-            DropIndex("dbo.Videos", new[] { "VisitId" });
+            DropIndex("dbo.VisitCategories", new[] { "VisitId" });
             DropIndex("dbo.UserVisiteds", new[] { "VisitId" });
             DropIndex("dbo.UserVisiteds", new[] { "CountryId" });
             DropIndex("dbo.UserVisiteds", new[] { "CityId" });
             DropIndex("dbo.UserVisiteds", new[] { "CircuitId" });
+            DropIndex("dbo.Videos", new[] { "Editorial_MyProperty" });
+            DropIndex("dbo.Videos", new[] { "VisitId" });
+            DropIndex("dbo.Teatries", new[] { "Editorial_MyProperty" });
             DropIndex("dbo.Teatries", new[] { "VisitId" });
+            DropIndex("dbo.Magazines", new[] { "Editorial_MyProperty" });
             DropIndex("dbo.Magazines", new[] { "VisitId" });
+            DropIndex("dbo.Brochures", new[] { "Editorial_MyProperty" });
             DropIndex("dbo.Brochures", new[] { "VisitId" });
+            DropIndex("dbo.Authors", new[] { "Editorial_MyProperty" });
+            DropIndex("dbo.Authors", new[] { "TeatryId" });
+            DropIndex("dbo.Authors", new[] { "VideoId" });
+            DropIndex("dbo.Authors", new[] { "MagazineId" });
+            DropIndex("dbo.Authors", new[] { "BrochureId" });
+            DropIndex("dbo.Authors", new[] { "BookId" });
+            DropIndex("dbo.Books", new[] { "Editorial_MyProperty" });
             DropIndex("dbo.Books", new[] { "VisitId" });
+            DropIndex("dbo.Visits", new[] { "Category_CategoryId" });
             DropIndex("dbo.Visits", new[] { "ReportId" });
-            DropIndex("dbo.Visits", new[] { "CategoryId" });
             DropIndex("dbo.Reports", new[] { "CongregationId" });
             DropIndex("dbo.Reports", new[] { "UserId" });
             DropIndex("dbo.Users", new[] { "StateId" });
@@ -320,12 +416,15 @@ namespace WebApijw2.Migrations
             DropIndex("dbo.Administrators", new[] { "CircuitId" });
             DropIndex("dbo.Administrators", new[] { "CountryId" });
             DropIndex("dbo.Administrators", new[] { "CityId" });
-            DropTable("dbo.Videos");
+            DropTable("dbo.Categories");
+            DropTable("dbo.VisitCategories");
             DropTable("dbo.UserVisiteds");
+            DropTable("dbo.Videos");
             DropTable("dbo.Teatries");
             DropTable("dbo.Magazines");
-            DropTable("dbo.Categories");
             DropTable("dbo.Brochures");
+            DropTable("dbo.Editorials");
+            DropTable("dbo.Authors");
             DropTable("dbo.Books");
             DropTable("dbo.Visits");
             DropTable("dbo.Reports");

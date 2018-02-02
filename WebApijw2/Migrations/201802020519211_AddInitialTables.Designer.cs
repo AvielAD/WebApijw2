@@ -13,7 +13,7 @@ namespace WebApijw2.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201801210757047_AddInitialTables"; }
+            get { return "201802020519211_AddInitialTables"; }
         }
         
         string IMigrationMetadata.Source
